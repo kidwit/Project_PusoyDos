@@ -1,0 +1,18 @@
+Game:Pusoy Dos 
+
+Description: Pusoy Dos is a shedding card game that originates in the Philippines involving a full deck of 52 cards, with 13 being distributed to each player. It is loosely inspired by various kinds of poker, and implements poker hands. It can include gambling though unlike poker it isn't a requirement for there to be a game. Unlike most card games where ace is usually the highest card, 2 is the highest and 3 is the lowest of the cards (2 of diamonds>3 of clubs).There are some variations of the game regionally but for the sake of simplicity we will focus on the main one.
+
+Basic rules of Pusoy Dos for reference:
+Traditionally it is played with 4 players but it is possible to play between 2-4 players.
+For the sake of time, this design will be for 2 players.
+13 cards are distributed to each player out of the deck of 52(excluding the joker cards).
+The main objective of the players are to be the first to shed all 13 cards in their hand.
+Cards are ranked with 2 being the highest and 3 being the lowest. 
+Traditionally the suits are ranked in the following order, from highest to lowest:Diamonds>Hearts>Spades>Clubs
+The game begins with the first player playing a single card, 2 cards(pair), 3 cards(three of a kind)or 5 cards (Full House,Flush,Straight, Four of a kind)
+The number of cards playable is dependent on the amount of cards played by the first player.
+If the next player is unable to play a higher card, or if they so choose, they can opt to skip the turn to the next player. If the game returns to the first player without any cards having been played, the cycle is reset and that player may choose whichever card to play as they please.
+The following card, or hand of cards, to be played must be ranked higher than what is already placed on the table.
+
+
+To be honest, I was originally gonna go with a simple chess game till I thought back to the games I used to play in Highschool and remembered that there used to be a browser game website for this that was eventually taken down for reasons I don't really know. I also figured that the design for this could be done simply.

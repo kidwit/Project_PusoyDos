@@ -5,7 +5,7 @@ const cards = [];
 for (let suit of suits) {
   for (let rank of ranks) {
     const cardName = `${rank}of${suit}`;
-    const fileName = `assets/${cardName}.png`;
+    const fileName = `images/${cardName}.png`;
 
     const image = new Image();
     image.src = fileName;
@@ -13,12 +13,24 @@ for (let suit of suits) {
     cards.push(image);
   }
 }
+
 function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
   }
+  return array;
+}
 
+const shuffledCards = shuffle(cards);
 
+const cardImages = document.querySelectorAll('.playerhand .card img');
+cardImages.forEach((img, index) => {
+  img.src = shuffledCards[index].src;
+  img.addEventListener('load', () => {
+    console.log(`Image ${index} loaded successfully.`);
+  });
+  img.addEventListener('error', () => {
+    console.error(`Error loading image ${index}.`);
+  });
+});

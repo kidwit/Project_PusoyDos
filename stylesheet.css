@@ -39,6 +39,11 @@ h2 {
     font-weight: 600;
     text-align: center;
     cursor: pointer;
+    position: relative; /* Make the parent container relative */
+    margin-top: 20px; /* Add some top margin to separate from the header */
+    display: flex; /* Use flexbox for positioning */
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+    align-items: center;
 }
 
 .buttons #playbutton {
@@ -73,6 +78,22 @@ h2 {
     bottom: 5px;
     left: 250px;  
 }
+
+.buttons #flipbutton {
+    border-style: solid;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: #B99332; /* Change the background color for the flip button */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    width: 80px;
+    border: black;
+    margin: 0 auto; /* Center the button horizontally */
+   
+}
+
 
 #cardplayed {
     color: white;

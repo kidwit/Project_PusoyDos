@@ -1,5 +1,6 @@
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const ranks = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
+const backOfCardPath = 'images/cardback/backOftheCard.png';
 
 const cards = [];
 for (let suit of suits) {
@@ -26,11 +27,21 @@ const shuffledCards = shuffle(cards);
 
 const cardImages = document.querySelectorAll('.playerhand .card img');
 cardImages.forEach((img, index) => {
-  img.src = shuffledCards[index].src;
+  img.src = backOfCardPath; 
   img.addEventListener('load', () => {
     console.log(`Image ${index} loaded successfully.`);
   });
   img.addEventListener('error', () => {
     console.error(`Error loading image ${index}.`);
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const playerCards = document.querySelectorAll('.playerhand .card');
+  
+  playerCards.forEach(card => {
+      card.addEventListener('click', () => {
+          card.classList.toggle('selected');
+      });
   });
 });

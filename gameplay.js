@@ -27,8 +27,20 @@ const shuffledCards = shuffle(cards);
 
 document.addEventListener('DOMContentLoaded', function() {
   const flipButton = document.getElementById('flipbutton');
+  const playButton = document.getElementById('playbutton');
   const cardImages = document.querySelectorAll('.playerhand .card img'); 
   const cardPaths = shuffledCards.map(card => card.src);
+  let selectedCardIndex = -1;
+
+  function loadSelectedCard() {
+    if (selectedCardIndex !== -1) {
+      cardPlayed.innerHTML = '';
+      const selectedCardImage = document.createElement('img');
+      selectedCardImage.src = cardPaths[selectedCardIndex];
+      selectedCardImage.alt = 'Selected Card';
+      cardPlayed.appendChild(selectedCardImage);
+    }
+  }
 
   let isFaceDown = true; 
 
@@ -45,18 +57,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
   cardImages.forEach((img, index) => {
     img.src = backOfCardPath; 
-    img.addEventListener('load', () => {
-      console.log(`Image ${index} loaded successfully.`);
+    img.addEventListener('click', () => {
+        selectedCardIndex = index;
+        loadSelectedCard(); // Load the selected card into the cardplayed box
+      });
     });
-    img.addEventListener('error', () => {
-      console.error(`Error loading image ${index}.`);
+  
+    const playerCards = document.querySelectorAll('.playerhand .card');
+    playerCards.forEach(card => {
+      card.addEventListener('click', () => {
+        card.classList.toggle('selected');
+      });
     });
   });
-
-  const playerCards = document.querySelectorAll('.playerhand .card');
-  playerCards.forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('selected');
-    });
-  });
-});
+  

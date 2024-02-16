@@ -94,7 +94,7 @@ h2 {
 #cardplayed {
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    border-style: solid;
+    border: none;
     padding: 65px;
     text-align: center;
     position: absolute;
@@ -127,7 +127,7 @@ h2 {
     max-width: calc(100% / 13.5); 
     margin: 1px; 
     cursor: pointer;
-    transition: transform 0.3s ease; /* Add transition for hover effect */
+    transition: transform 0.3s ease;
 }
 
 .card:hover {
@@ -140,7 +140,7 @@ h2 {
 }
 
 .card.played {
-    border: none;
+    border: 0;
     position: absolute;
     top: 0;
     left: 0;
@@ -152,6 +152,7 @@ h2 {
 .card img {
     width: 100%;
     height: auto;
+    box-sizing: border-box;
 }
 
 .card:hover {

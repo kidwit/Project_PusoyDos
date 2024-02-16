@@ -39,10 +39,10 @@ h2 {
     font-weight: 600;
     text-align: center;
     cursor: pointer;
-    position: relative; /* Make the parent container relative */
-    margin-top: 20px; /* Add some top margin to separate from the header */
-    display: flex; /* Use flexbox for positioning */
-    justify-content: space-between; /* Distribute items evenly along the main axis */
+    position: relative; 
+    margin-top: 20px; 
+    display: flex; 
+    justify-content: space-between; 
     align-items: center;
 }
 
@@ -83,14 +83,14 @@ h2 {
     border-style: solid;
     border-radius: 50%;
     padding: 10px;
-    background-color: #B99332; /* Change the background color for the flip button */
+    background-color: #B99332; 
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80px;
     width: 80px;
     border: black;
-    margin: 0 auto; /* Center the button horizontally */
+    margin: 0 auto; 
    
 }
 
@@ -110,16 +110,16 @@ h2 {
 .playerhand {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Center-align the cards horizontally */
+    justify-content: center; 
     margin: 20px auto;
     position: relative; 
     top: 50px; 
 }
   
   .card {
-    flex: 0 0 calc(100% / 13.5); /* Distribute cards equally across the container with slight reduction */
-    max-width: calc(100% / 13.5); /* Limit the maximum width of each card */
-    margin: 1px; /* Reduce margin between cards */
+    flex: 0 0 calc(100% / 13.5);
+    max-width: calc(100% / 13.5); 
+    margin: 1px; 
   }
   
   
@@ -132,6 +132,6 @@ h2 {
   }
 
   .card.selected {
-    transform: translateY(-10px); /* Move the selected card up by 10px */
+    transform: translateY(-10px);
     cursor: pointer;
 }

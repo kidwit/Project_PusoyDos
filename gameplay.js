@@ -25,23 +25,38 @@ function shuffle(array) {
 
 const shuffledCards = shuffle(cards);
 
-const cardImages = document.querySelectorAll('.playerhand .card img');
-cardImages.forEach((img, index) => {
-  img.src = backOfCardPath; 
-  img.addEventListener('load', () => {
-    console.log(`Image ${index} loaded successfully.`);
-  });
-  img.addEventListener('error', () => {
-    console.error(`Error loading image ${index}.`);
-  });
-});
-
 document.addEventListener('DOMContentLoaded', function() {
+  const flipButton = document.getElementById('flipbutton');
+  const cardImages = document.querySelectorAll('.playerhand .card img'); 
+  const cardPaths = shuffledCards.map(card => card.src);
+
+  let isFaceDown = true; 
+
+  flipButton.addEventListener('click', () => {
+    isFaceDown = !isFaceDown; 
+    cardImages.forEach((img, index) => {
+      if (isFaceDown) {
+        img.src = backOfCardPath;
+      } else {
+        img.src = cardPaths[index];
+      }
+    });
+  });
+
+  cardImages.forEach((img, index) => {
+    img.src = backOfCardPath; 
+    img.addEventListener('load', () => {
+      console.log(`Image ${index} loaded successfully.`);
+    });
+    img.addEventListener('error', () => {
+      console.error(`Error loading image ${index}.`);
+    });
+  });
+
   const playerCards = document.querySelectorAll('.playerhand .card');
-  
   playerCards.forEach(card => {
-      card.addEventListener('click', () => {
-          card.classList.toggle('selected');
-      });
+    card.addEventListener('click', () => {
+      card.classList.toggle('selected');
+    });
   });
 });

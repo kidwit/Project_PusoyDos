@@ -34,10 +34,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function loadSelectedCard() {
     if (selectedCardIndex !== -1) {
-      cardPlayed.innerHTML = '';
+      cardplayed.innerHTML = '';
       const selectedCardImage = document.createElement('img');
       selectedCardImage.src = cardPaths[selectedCardIndex];
       selectedCardImage.alt = 'Selected Card';
+      selectedCardImage.style.width = '200px'; // Adjust width as needed
+      selectedCardImage.style.height = 'auto';
       cardPlayed.appendChild(selectedCardImage);
     }
   }
@@ -69,5 +71,14 @@ document.addEventListener('DOMContentLoaded', function() {
         card.classList.toggle('selected');
       });
     });
-  });
   
+  // Event listener for the play button
+  playButton.addEventListener('click', () => {
+      const selectedCard = document.querySelector('.playerhand .card.selected');
+      if (selectedCard) {
+          cardplayed.innerHTML = ''; // Clear any existing card in the cardplayed box
+          cardplayed.appendChild(selectedCard);
+          selectedCard.classList.remove('selected');
+      }
+  });
+});

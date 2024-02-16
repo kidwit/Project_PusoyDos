@@ -1,6 +1,5 @@
 body {
     background-color:  #800020;
-    
     margin: 0;
 }
 
@@ -25,7 +24,6 @@ nav {
     padding: 5px;
     margin-left: 950px;
     position: static;
-    
 }
 
 h2 {
@@ -91,9 +89,7 @@ h2 {
     width: 80px;
     border: black;
     margin: 0 auto; 
-   
 }
-
 
 #cardplayed {
     color: white;
@@ -107,6 +103,16 @@ h2 {
     z-index: 1; 
     top: 150px; 
 }
+
+
+#cardplayed img {
+    width: 140px; 
+    height: auto; 
+  
+}
+
+
+
 .playerhand {
     display: flex;
     flex-wrap: wrap;
@@ -116,22 +122,38 @@ h2 {
     top: 50px; 
 }
   
-  .card {
+.card {
     flex: 0 0 calc(100% / 13.5);
     max-width: calc(100% / 13.5); 
     margin: 1px; 
-  }
-  
-  
-  .card img {
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Add transition for hover effect */
+}
+
+.card:hover {
+    transform: translateY(-10px);
+}
+
+.card.selected {
+    transform: translateY(-10px);
+    cursor: pointer;
+}
+
+.card.played {
+    border: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(0, -100%);
+    transition: transform 0.5s ease;
+    
+   }
+
+.card img {
     width: 100%;
     height: auto;
-  }
-  .card:hover {
-    cursor: pointer;
-  }
+}
 
-  .card.selected {
-    transform: translateY(-10px);
+.card:hover {
     cursor: pointer;
 }

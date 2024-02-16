@@ -30,18 +30,26 @@ document.addEventListener('DOMContentLoaded', function() {
   const playButton = document.getElementById('playbutton');
   const cardImages = document.querySelectorAll('.playerhand .card img'); 
   const cardPaths = shuffledCards.map(card => card.src);
-  let selectedCardIndex = -1;
+  let selectedCardsIndexes = [];
 
-  function loadSelectedCard() {
-    if (selectedCardIndex !== -1) {
-      cardplayed.innerHTML = '';
+  function loadSelectedCards() {
+    selectedCardsIndexes.forEach(index => {
       const selectedCardImage = document.createElement('img');
-      selectedCardImage.src = cardPaths[selectedCardIndex];
+      selectedCardImage.src = cardPaths[index];
       selectedCardImage.alt = 'Selected Card';
-      cardPlayed.appendChild(selectedCardImage);
+      cardplayed.appendChild(selectedCardImage);
+    });
+  
+    // Update text content based on selected cards
+    if (selectedCardsIndexes.length === 0) {
+      cardplayed.innerText = 'Play a hand to begin';
+    } else {
+      cardplayed.innerText = ''; // Clear text content
     }
   }
-
+  
+  
+  
   let isFaceDown = true; 
 
   flipButton.addEventListener('click', () => {
@@ -55,28 +63,42 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
+  // Event listener for selecting cards
   cardImages.forEach((img, index) => {
     img.src = backOfCardPath; 
     img.addEventListener('click', () => {
-        selectedCardIndex = index;
-        loadSelectedCard(); 
-      });
-    });
-  
-    const playerCards = document.querySelectorAll('.playerhand .card');
-    playerCards.forEach(card => {
-      card.addEventListener('click', () => {
-        card.classList.toggle('selected');
-      });
-    });
-  
-  // Event listener for the play button
-  playButton.addEventListener('click', () => {
-      const selectedCard = document.querySelector('.playerhand .card.selected');
-      if (selectedCard) {
-          cardplayed.innerHTML = ''; 
-          cardplayed.appendChild(selectedCard);
-          selectedCard.classList.remove('selected');
+      if (selectedCardsIndexes.length < 5) { // Limit selection to 5 cards
+        if (selectedCardsIndexes.includes(index)) {
+          selectedCardsIndexes = selectedCardsIndexes.filter(i => i !== index); // Deselect if already selected
+          img.style.transform = 'translateY(0)'; // Reset the transform
+        } else {
+          selectedCardsIndexes.push(index); // Add index to selected cards
+          img.style.transform = 'translateY(-10px)'; // Raise the card slightly
+        }
+        // Do not load selected cards here
       }
+    });
   });
+  
+  const playerCards = document.querySelectorAll('.playerhand .card');
+  playerCards.forEach(card => {
+    card.addEventListener('click', () => {
+      card.classList.toggle('selected');
+    });
+  });
+  
+ // Event listener for the play button
+playButton.addEventListener('click', () => {
+  selectedCardsIndexes.forEach(index => {
+    const selectedCard = document.querySelector(`.playerhand .card:nth-child(${index + 1})`);
+    if (selectedCard) {
+      const clonedCard = selectedCard.cloneNode(true);
+      clonedCard.classList.remove('selected'); // Remove 'selected' class from cloned card
+      clonedCard.style.marginRight = '5px'; // Add margin between cards
+      cardplayed.appendChild(clonedCard); // Append cloned card to cardplayed area
+      selectedCard.style.visibility = 'hidden'; // Hide selected card in the player's hand
+    }
+  });
+});
+
 });

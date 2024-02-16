@@ -1,5 +1,5 @@
 body {
-    background-color:  #800020;
+    background-color:  #0d030c;
     margin: 0;
 }
 
@@ -12,6 +12,13 @@ header {
     margin-top: 0px;
     padding: 5px;
     text-align: center;
+}
+
+h3 {
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 800; 
+    color: goldenrod;   
 }
 
 nav {
@@ -95,23 +102,27 @@ h2 {
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     border: none;
-    padding: 65px;
     text-align: center;
     position: absolute;
-    width: 40px;
-    left: calc(45% - 100px); 
+    left: 50%; /* Move the container to the center horizontally */
+    transform: translateX(-50%); /* Center the container horizontally */
     z-index: 1; 
     top: 150px; 
+    display: flex; /* Set the container as a flex container */
+    flex-direction: row; /* Arrange the items in a row */
+    justify-content: center; /* Center the items horizontally */
 }
-
 
 #cardplayed img {
     width: 140px; 
     height: auto; 
-  
+    margin-right: 100px; /* Add spacing between the cards */
 }
 
-
+.hidden {
+    display: none;
+  }
+  
 
 .playerhand {
     display: flex;

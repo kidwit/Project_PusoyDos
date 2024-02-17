@@ -25,23 +25,38 @@ function shuffle(array) {
 
 const shuffledCards = shuffle(cards);
 
-// Function to check if the selected card forms a valid play
+// Function to deal cards to Player 2
+function dealPlayer2Hand() {
+  const player2Hand = shuffledCards.slice(0, 13); // Take the first 13 cards from the shuffled deck
+  shuffledCards.splice(0, 13); // Remove those cards from the deck
+  return player2Hand;
+}
+
+// Call the function to deal cards to Player 2 during initialization
+const player2Hand = dealPlayer2Hand();
+
+const player1Hand = shuffledCards.slice(0, 13); // Deal 13 cards to Player One
+shuffledCards.splice(0, 13); // Remove those cards from the deck
+
+
 function isValidPlay(selectedCard, lastPlayedCard) {
-  // Check if a card is selected and if it is higher than the last played card
-  if (!selectedCard || !lastPlayedCard) {
-    return false; // No card selected or no last played card, play is invalid
+  if (!lastPlayedCard || !isFirstHandPlayed) {
+    return { isValid: true, errorMessage: null }; // First hand or no last played card, any card can be played
   }
 
-  // Extract the rank of the selected and last played cards
+  if (!selectedCard) {
+    return { isValid: false, errorMessage: "No card selected" }; // No card selected, play is invalid
+  }
+
   const selectedRank = selectedCard.split('of')[0];
   const lastPlayedRank = lastPlayedCard.split('of')[0];
 
-  // Compare the ranks of the selected and last played cards
   const rankOrder = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
+
   if (rankOrder.indexOf(selectedRank) > rankOrder.indexOf(lastPlayedRank)) {
-    return true; // Selected card is higher, play is valid
-  } else {
-    return false; // Selected card is not higher, play is invalid
+    return { isValid: true, errorMessage: null }; // Selected card is higher, play is valid
+  } else { 
+    return { isValid: false, errorMessage: "Selected card is not higher, play is invalid" };
   }
 }
 
@@ -57,14 +72,36 @@ document.addEventListener('DOMContentLoaded', function() {
   playerTag.textContent = 'Player One'; // Set initial player tag to Player One
   playerTag.style.color = 'gold'; // Set initial color to gold
 
+  togglePlayer();
+
+  cardImages.forEach(img => {
+    img.src = backOfCardPath; // Set the source to the back of the card image path
+    img.alt = 'Card';
+});
+
+  function loadPlayerHand(hand) {
+    cardImages.forEach((img, index) => {
+      img.src = hand[index].src;
+      img.alt = 'Card';   
+    });
+   // Update player tag text and color based on currentPlayer
+  playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
+  playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
+}  
   function togglePlayer() {
     // Toggle between player 1 and player 2
     currentPlayer = currentPlayer === 1 ? 2 : 1;
 
-    // Update player tag text and color based on currentPlayer
-    playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
-    playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
+     // If it's Player 2's turn, load their hand
+  if (currentPlayer === 2) {
+    loadPlayerHand(player2Hand);
+  } else {
+    // If it's not Player 2's turn, load Player One's hand
+    loadPlayerHand(player1Hand);
   }
+  }
+   
+  
 
   // Call togglePlayer() to initialize the current player
   togglePlayer();
@@ -125,20 +162,24 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
  // Event listener for the play button
-playButton.addEventListener('click', () => {
+ playButton.addEventListener('click', () => {
+  if (selectedCardsIndexes.length === 0) {
+    togglePlayer();
+    return;
+  }
+
   selectedCardsIndexes.forEach(index => {
     const selectedCard = document.querySelector(`.playerhand .card:nth-child(${index + 1})`);
     if (selectedCard) {
       const clonedCard = selectedCard.cloneNode(true);
-      clonedCard.classList.remove('selected'); 
-      clonedCard.style.marginRight = '5px'; 
-      cardplayed.appendChild(clonedCard); 
-      selectedCard.style.visibility = 'hidden'; 
+      clonedCard.classList.remove('selected');
+      clonedCard.style.marginRight = '5px';
+      cardplayed.appendChild(clonedCard);
+      selectedCard.style.visibility = 'hidden';
     }
   });
-  togglePlayer(); // Switch to the next player after playing cards
-  });
-
-  // Call togglePlayer() to initialize the current player
   togglePlayer();
+});
+
+togglePlayer();
 });

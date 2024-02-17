@@ -25,6 +25,9 @@ function shuffle(array) {
 
 const shuffledCards = shuffle(cards);
 
+const player1Hand = Array(13).fill(backOfCardPath);
+
+
 // Function to deal cards to Player 2
 function dealPlayer2Hand() {
   const player2Hand = shuffledCards.slice(0, 13); // Take the first 13 cards from the shuffled deck
@@ -32,12 +35,7 @@ function dealPlayer2Hand() {
   return player2Hand;
 }
 
-// Call the function to deal cards to Player 2 during initialization
-const player2Hand = dealPlayer2Hand();
-
-const player1Hand = shuffledCards.slice(0, 13); // Deal 13 cards to Player One
-shuffledCards.splice(0, 13); // Remove those cards from the deck
-
+const player2Hand = Array(13).fill(backOfCardPath);
 
 function isValidPlay(selectedCard, lastPlayedCard) {
   if (!lastPlayedCard || !isFirstHandPlayed) {
@@ -66,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const cardImages = document.querySelectorAll('.playerhand .card img'); 
   const cardPaths = shuffledCards.map(card => card.src);
   let selectedCardsIndexes = [];
-  let currentPlayer = 1; // Set initial currentPlayer to 2 so that "Player One" is displayed first
+  let currentPlayer = 2; // Set initial currentPlayer to 2 so that "Player One" is displayed first
 
   const playerTag = document.getElementById('playertag');
   playerTag.textContent = 'Player One'; // Set initial player tag to Player One
@@ -126,16 +124,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let isFaceDown = true; 
 
-  flipButton.addEventListener('click', () => {
-    isFaceDown = !isFaceDown; 
-    cardImages.forEach((img, index) => {
-      if (isFaceDown) {
-        img.src = backOfCardPath;
-      } else {
-        img.src = cardPaths[index];
-      }
-    });
-  });
+  // Event listener for the "Reveal the Cards" button
+flipButton.addEventListener('click', () => {
+  if (currentPlayer === 1) {
+    loadPlayerHand(player1Hand); // If it's Player One's turn, reveal Player One's cards
+  } else {
+    loadPlayerHand(player2Hand); // If it's Player Two's turn, reveal Player Two's cards
+  }
+});
 
   // Event listener for selecting cards
   cardImages.forEach((img, index) => {

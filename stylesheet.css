@@ -68,7 +68,7 @@ h2 {
     border:black
 }
 
-.buttons #skipbutton {
+/*.buttons #skipbutton {
     border-style: solid;
     border-radius: 50%;
     padding: 10px;
@@ -82,7 +82,7 @@ h2 {
     border:black;
     bottom: 5px;
     left: 250px;  
-}
+} */
 
 .buttons #flipbutton {
     border-style: solid;

@@ -51,29 +51,24 @@ document.addEventListener('DOMContentLoaded', function() {
   const cardImages = document.querySelectorAll('.playerhand .card img'); 
   const cardPaths = shuffledCards.map(card => card.src);
   let selectedCardsIndexes = [];
-  let currentPlayer = 1;
+  let currentPlayer = 1; // Set initial currentPlayer to 2 so that "Player One" is displayed first
 
   const playerTag = document.getElementById('playertag');
-  playerTag.textContent = 'Player One';
-  playerTag.style.color = 'gold';
+  playerTag.textContent = 'Player One'; // Set initial player tag to Player One
+  playerTag.style.color = 'gold'; // Set initial color to gold
 
   function togglePlayer() {
-    // Explicitly set initial player to Player One
-    if (currentPlayer === 1) {
-      const playerTag = document.getElementById('playertag');
-      playerTag.textContent = 'Player One';
-      playerTag.style.color = 'gold';
-    }
-    currentPlayer = currentPlayer === 1 ? 2 : 1; // Toggle between player 1 and player 2
-    const playerTag = document.getElementById('playertag'); // Select the element with id "playertag"
-    playerTag.textContent = `Player ${currentPlayer}`; // Update player tag text
-    if (currentPlayer === 2) {
-        playerTag.style.color = '#BC1823'; // Change color to red for player 2
-    } else {
-        playerTag.style.color = 'gold'; // Keep color gold for player 1
-    }
-    playerTag.style.fontFamily = 'Arial, sans-serif'; // Change font family
+    // Toggle between player 1 and player 2
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+
+    // Update player tag text and color based on currentPlayer
+    playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
+    playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
   }
+
+  // Call togglePlayer() to initialize the current player
+  togglePlayer();
+
 
   function loadSelectedCards() {
     selectedCardsIndexes.forEach(index => {

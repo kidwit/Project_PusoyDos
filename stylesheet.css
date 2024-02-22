@@ -42,11 +42,10 @@ h2 {
     color: darkred;
     text-align: center;
     position: absolute; 
-    top: 500px; /* Adjust this value to move the element to the desired position */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Center horizontally */
+    top: 500px;
+    left: 50%;
+    transform: translateX(-50%);
 }
-
 
 .buttons {
     color: white;
@@ -94,7 +93,7 @@ h2 {
     left: 250px;  
 } */
 
-.buttons #flipbutton {
+.buttons #flipButton {
     border-style: solid;
     border-radius: 50%;
     padding: 10px;
@@ -106,6 +105,7 @@ h2 {
     width: 80px;
     border: black;
     margin: 0 auto; 
+    margin-left: 40px;
 }
 
 #cardplayed {
@@ -114,25 +114,24 @@ h2 {
     border: none;
     text-align: center;
     position: absolute;
-    left: 50%; /* Move the container to the center horizontally */
-    transform: translateX(-50%); /* Center the container horizontally */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1; 
     top: 150px; 
-    display: flex; /* Set the container as a flex container */
-    flex-direction: row; /* Arrange the items in a row */
-    justify-content: center; /* Center the items horizontally */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 #cardplayed img {
     width: 140px; 
     height: auto; 
-    margin-right: 100px; /* Add spacing between the cards */
+    margin-right: 100px;
 }
 
 .hidden {
     display: none;
-  }
-  
+}
 
 .playerhand {
     display: flex;
@@ -142,7 +141,7 @@ h2 {
     position: relative; 
     top: 50px; 
 }
-  
+
 .card {
     flex: 0 0 calc(100% / 13.5);
     max-width: calc(100% / 13.5); 
@@ -167,8 +166,7 @@ h2 {
     left: 0;
     transform: translate(0, -100%);
     transition: transform 0.5s ease;
-    
-   }
+}
 
 .card img {
     width: 100%;

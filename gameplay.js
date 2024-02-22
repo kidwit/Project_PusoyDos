@@ -1,20 +1,44 @@
+// Initialize variables
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 const ranks = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
-const backOfCardPath = 'images/cardback/backOftheCard.png';
-
+const backOfCardPath = 'http://127.0.0.1:3000/images/cardback/backOftheCard.png';
 const cards = [];
-for (let suit of suits) {
-  for (let rank of ranks) {
-    const cardName = `${rank}of${suit}`;
-    const fileName = `images/${cardName}.png`;
+let shuffledCards = [];
+let player1Hand = [];
+let player2Hand = [];
+let currentPlayer = 1;
 
-    const image = new Image();
-    image.src = fileName;
-
-    cards.push(image);
+// Function to initialize the deck of cards
+function initializeDeck() {
+  for (let suit of suits) {
+    for (let rank of ranks) {
+      const cardName = `${rank}of${suit}`;
+      const fileName = `images/${cardName}.png`;
+      const image = new Image();
+      image.src = fileName;
+      cards.push(image);
+    }
   }
 }
 
+// Function to shuffle the deck of cards
+function shuffleDeck() {
+  shuffledCards = shuffle(cards);
+}
+
+// Function to deal cards to Player 1
+function dealPlayer1Hand() {
+  player1Hand = shuffledCards.slice(0, 13);
+  shuffledCards.splice(0, 13);
+}
+
+// Function to deal cards to Player 2
+function dealPlayer2Hand() {
+  player2Hand = shuffledCards.slice(0, 13);
+  shuffledCards.splice(0, 13);
+}
+
+// Function to shuffle an array
 function shuffle(array) {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -23,163 +47,97 @@ function shuffle(array) {
   return array;
 }
 
-const shuffledCards = shuffle(cards);
-
-// Function to deal cards to Player 2
-function dealPlayer2Hand() {
-  const player2Hand = shuffledCards.slice(0, 13); // Take the first 13 cards from the shuffled deck
-  shuffledCards.splice(0, 13); // Remove those cards from the deck
-  return player2Hand;
-}
-
-// Call the function to deal cards to Player 2 during initialization
-const player2Hand = dealPlayer2Hand();
-
-const player1Hand = shuffledCards.slice(0, 13); // Deal 13 cards to Player One
-shuffledCards.splice(0, 13); // Remove those cards from the deck
-
-
-function isValidPlay(selectedCard, lastPlayedCard) {
-  if (!lastPlayedCard || !isFirstHandPlayed) {
-    return { isValid: true, errorMessage: null }; // First hand or no last played card, any card can be played
-  }
-
-  if (!selectedCard) {
-    return { isValid: false, errorMessage: "No card selected" }; // No card selected, play is invalid
-  }
-
-  const selectedRank = selectedCard.split('of')[0];
-  const lastPlayedRank = lastPlayedCard.split('of')[0];
-
-  const rankOrder = ['3', '4', '5', '6', '7', '8', '9', '10', 'jack', 'queen', 'king', 'ace', '2'];
-
-  if (rankOrder.indexOf(selectedRank) > rankOrder.indexOf(lastPlayedRank)) {
-    return { isValid: true, errorMessage: null }; // Selected card is higher, play is valid
-  } else { 
-    return { isValid: false, errorMessage: "Selected card is not higher, play is invalid" };
-  }
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  const flipButton = document.getElementById('flipbutton');
-  const playButton = document.getElementById('playbutton');
-  const cardImages = document.querySelectorAll('.playerhand .card img'); 
-  const cardPaths = shuffledCards.map(card => card.src);
-  let selectedCardsIndexes = [];
-  let currentPlayer = 1; // Set initial currentPlayer to 2 so that "Player One" is displayed first
-
-  const playerTag = document.getElementById('playertag');
-  playerTag.textContent = 'Player One'; // Set initial player tag to Player One
-  playerTag.style.color = 'gold'; // Set initial color to gold
-
-  togglePlayer();
-
-  cardImages.forEach(img => {
-    img.src = backOfCardPath; // Set the source to the back of the card image path
-    img.alt = 'Card';
-});
-
-  function loadPlayerHand(hand) {
-    cardImages.forEach((img, index) => {
-      img.src = hand[index].src;
-      img.alt = 'Card';   
-    });
-   // Update player tag text and color based on currentPlayer
-  playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
-  playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
-}  
-  function togglePlayer() {
-    // Toggle between player 1 and player 2
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-
-     // If it's Player 2's turn, load their hand
-  if (currentPlayer === 2) {
-    loadPlayerHand(player2Hand);
-  } else {
-    // If it's not Player 2's turn, load Player One's hand
-    loadPlayerHand(player1Hand);
-  }
-  }
-   
-  
-
-  // Call togglePlayer() to initialize the current player
-  togglePlayer();
-
-
-  function loadSelectedCards() {
-    selectedCardsIndexes.forEach(index => {
-      const selectedCardImage = document.createElement('img');
-      selectedCardImage.src = cardPaths[index];
-      selectedCardImage.alt = 'Selected Card';
-      cardplayed.appendChild(selectedCardImage);
-    });
-    
-    if (selectedCardsIndexes.length === 0) {
-      cardplayed.innerText = 'Play a hand to begin';
-    } else {
-      cardplayed.innerText = ''; 
-    }
-  }
-
-  
-  
-  let isFaceDown = true; 
-
-  flipButton.addEventListener('click', () => {
-    isFaceDown = !isFaceDown; 
-    cardImages.forEach((img, index) => {
-      if (isFaceDown) {
-        img.src = backOfCardPath;
-      } else {
-        img.src = cardPaths[index];
-      }
-    });
-  });
-
-  // Event listener for selecting cards
+// Function to load player hand in background
+function loadPlayerHandInBackground(hand, cardImages) {
   cardImages.forEach((img, index) => {
-    img.src = backOfCardPath; 
-    img.addEventListener('click', () => {
-      if (selectedCardsIndexes.length < 5) { 
-        if (selectedCardsIndexes.includes(index)) {
-          selectedCardsIndexes = selectedCardsIndexes.filter(i => i !== index); 
-          img.style.transform = 'translateY(0)'; 
-        } else {
-          selectedCardsIndexes.push(index); 
-          img.style.transform = 'translateY(-10px)'; 
-        }
-        
+    img.src = backOfCardPath;
+    img.alt = 'Card';
+  });
+}
+
+// Event listener for DOMContentLoaded
+document.addEventListener('DOMContentLoaded', function() {
+  initializeDeck(); // Initialize the deck of cards
+  shuffleDeck(); // Shuffle the deck of cards
+  dealPlayer1Hand(); // Deal cards to Player 1
+  dealPlayer2Hand(); // Deal cards to Player 2
+
+  const flipButton = document.getElementById('flipButton');
+  const playButton = document.getElementById('playbutton');
+  const cardImages = document.querySelectorAll('.playerhand .card img');
+  let selectedCardsIndexes = [];
+
+  // Function to handle flipping cards
+  // Event listener for flipping cards
+flipButton.addEventListener('click', () => {
+  // Determine whose turn it is and load their hand accordingly
+  const currentHand = currentPlayer === 1 ? player1Hand : player2Hand;
+
+  // Loop through the card images and set their source to their respective paths
+  cardImages.forEach((img, index) => {
+    img.src = currentHand[index].src; // Set the source to the card's path
+  });
+});
+// Event listener for selecting cards
+cardImages.forEach((img, index) => {
+  img.src = backOfCardPath;
+  img.setAttribute('data-index', index);
+  img.addEventListener('click', () => {
+    if (selectedCardsIndexes.length < 5) {
+      if (selectedCardsIndexes.includes(index)) {
+        selectedCardsIndexes = selectedCardsIndexes.filter(i => i !== index);
+        img.style.transform = 'translateY(0)';
+      } else {
+        selectedCardsIndexes.push(index);
+        img.style.transform = 'translateY(-10px)';
       }
-    });
+    }
   });
-  
-  const playerCards = document.querySelectorAll('.playerhand .card');
-  playerCards.forEach(card => {
-    card.addEventListener('click', () => {
-      card.classList.toggle('selected');
-    });
-  });
-  
- // Event listener for the play button
- playButton.addEventListener('click', () => {
+});
+ // Event listener for playing cards
+playButton.addEventListener('click', () => {
+  // Check if any cards are selected
   if (selectedCardsIndexes.length === 0) {
+    // Toggle to the next player's turn
     togglePlayer();
     return;
   }
 
+  // If cards are selected, handle playing cards
   selectedCardsIndexes.forEach(index => {
-    const selectedCard = document.querySelector(`.playerhand .card:nth-child(${index + 1})`);
+    const selectedCard = currentPlayer === 1 ? player1Hand[index] : player2Hand[index];
     if (selectedCard) {
       const clonedCard = selectedCard.cloneNode(true);
       clonedCard.classList.remove('selected');
       clonedCard.style.marginRight = '5px';
       cardplayed.appendChild(clonedCard);
-      selectedCard.style.visibility = 'hidden';
+      // Remove the played card from the player's hand
+      if (currentPlayer === 1) {
+        player1Hand.splice(index, 1);
+      } else {
+        player2Hand.splice(index, 1);
+      }
     }
   });
+
+  // Clear the selected cards array
+  selectedCardsIndexes = [];
+
+  // Toggle to the next player's turn
   togglePlayer();
 });
+  // Toggle between players
+  function togglePlayer() {
+    currentPlayer = currentPlayer === 1 ? 2 : 1;
+    loadPlayerHandInBackground(currentPlayer === 1 ? player1Hand : player2Hand, cardImages);
+    const playerTag = document.getElementById('playertag');
+    playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
+    playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
+  }
 
-togglePlayer();
+  // Initialize the game with Player 1's turn
+  loadPlayerHandInBackground(player1Hand, cardImages);
+  const playerTag = document.getElementById('playertag');
+  playerTag.textContent = 'Player One';
+  playerTag.style.color = 'gold';
 });

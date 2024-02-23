@@ -3,6 +3,7 @@ body {
     margin: 0;
 }
 
+
 header {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     color: #B99332;
@@ -14,12 +15,14 @@ header {
     text-align: center;
 }
 
+
 #playertag {
     text-align: center;
     font-family: 'Times New Roman', Times, serif;
-    font-weight: 800; 
-    color: goldenrod;   
+    font-weight: 800;
+    color: goldenrod;  
 }
+
 
 nav {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -33,19 +36,22 @@ nav {
     position: static;
 }
 
+
 h2 {
     font-weight: bolder;
     text-align: center;
 }
 
+
 #errorMessage {
     color: darkred;
     text-align: center;
-    position: absolute; 
+    position: absolute;
     top: 500px;
     left: 50%;
     transform: translateX(-50%);
 }
+
 
 .buttons {
     color: white;
@@ -53,12 +59,13 @@ h2 {
     font-weight: 600;
     text-align: center;
     cursor: pointer;
-    position: relative; 
-    margin-top: 20px; 
-    display: flex; 
-    justify-content: space-between; 
+    position: relative;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
 }
+
 
 .buttons #playbutton {
     border-style: solid;
@@ -77,6 +84,7 @@ h2 {
     border:black
 }
 
+
 /*.buttons #skipbutton {
     border-style: solid;
     border-radius: 50%;
@@ -93,20 +101,22 @@ h2 {
     left: 250px;  
 } */
 
+
 .buttons #flipButton {
     border-style: solid;
     border-radius: 50%;
     padding: 10px;
-    background-color: #B99332; 
+    background-color: #B99332;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 80px;
     width: 80px;
     border: black;
-    margin: 0 auto; 
+    margin: 0 auto;
     margin-left: 40px;
 }
+
 
 #cardplayed {
     color: white;
@@ -116,48 +126,55 @@ h2 {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 1; 
-    top: 150px; 
+    z-index: 1;
+    top: 150px;
     display: flex;
     flex-direction: row;
     justify-content: center;
 }
 
+
 #cardplayed img {
-    width: 140px; 
-    height: auto; 
+    width: 140px;
+    height: auto;
     margin-right: 100px;
 }
+
 
 .hidden {
     display: none;
 }
 
+
 .playerhand {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: center;
     margin: 20px auto;
-    position: relative; 
-    top: 50px; 
+    position: relative;
+    top: 50px;
 }
+
 
 .card {
     flex: 0 0 calc(100% / 13.5);
-    max-width: calc(100% / 13.5); 
-    margin: 1px; 
+    max-width: calc(100% / 13.5);
+    margin: 1px;
     cursor: pointer;
     transition: transform 0.3s ease;
 }
+
 
 .card:hover {
     transform: translateY(-10px);
 }
 
+
 .card.selected {
     transform: translateY(-10px);
     cursor: pointer;
 }
+
 
 .card.played {
     border: 0;
@@ -168,12 +185,16 @@ h2 {
     transition: transform 0.5s ease;
 }
 
+
 .card img {
     width: 100%;
     height: auto;
     box-sizing: border-box;
 }
 
+
 .card:hover {
     cursor: pointer;
 }
+
+

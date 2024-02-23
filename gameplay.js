@@ -8,6 +8,7 @@ let player1Hand = [];
 let player2Hand = [];
 let currentPlayer = 1;
 
+
 // Function to initialize the deck of cards
 function initializeDeck() {
   for (let suit of suits) {
@@ -21,10 +22,12 @@ function initializeDeck() {
   }
 }
 
+
 // Function to shuffle the deck of cards
 function shuffleDeck() {
   shuffledCards = shuffle(cards);
 }
+
 
 // Function to deal cards to Player 1
 function dealPlayer1Hand() {
@@ -32,11 +35,13 @@ function dealPlayer1Hand() {
   shuffledCards.splice(0, 13);
 }
 
+
 // Function to deal cards to Player 2
 function dealPlayer2Hand() {
   player2Hand = shuffledCards.slice(0, 13);
   shuffledCards.splice(0, 13);
 }
+
 
 // Function to shuffle an array
 function shuffle(array) {
@@ -47,6 +52,7 @@ function shuffle(array) {
   return array;
 }
 
+
 // Function to load player hand in background
 function loadPlayerHandInBackground(hand, cardImages) {
   cardImages.forEach((img, index) => {
@@ -55,6 +61,7 @@ function loadPlayerHandInBackground(hand, cardImages) {
   });
 }
 
+
 // Event listener for DOMContentLoaded
 document.addEventListener('DOMContentLoaded', function() {
   initializeDeck(); // Initialize the deck of cards
@@ -62,16 +69,19 @@ document.addEventListener('DOMContentLoaded', function() {
   dealPlayer1Hand(); // Deal cards to Player 1
   dealPlayer2Hand(); // Deal cards to Player 2
 
+
   const flipButton = document.getElementById('flipButton');
   const playButton = document.getElementById('playbutton');
   const cardImages = document.querySelectorAll('.playerhand .card img');
   let selectedCardsIndexes = [];
+
 
   // Function to handle flipping cards
   // Event listener for flipping cards
 flipButton.addEventListener('click', () => {
   // Determine whose turn it is and load their hand accordingly
   const currentHand = currentPlayer === 1 ? player1Hand : player2Hand;
+
 
   // Loop through the card images and set their source to their respective paths
   cardImages.forEach((img, index) => {
@@ -103,6 +113,7 @@ playButton.addEventListener('click', () => {
     return;
   }
 
+
   // If cards are selected, handle playing cards
   selectedCardsIndexes.forEach(index => {
     const selectedCard = currentPlayer === 1 ? player1Hand[index] : player2Hand[index];
@@ -120,8 +131,10 @@ playButton.addEventListener('click', () => {
     }
   });
 
+
   // Clear the selected cards array
   selectedCardsIndexes = [];
+
 
   // Toggle to the next player's turn
   togglePlayer();
@@ -134,6 +147,7 @@ playButton.addEventListener('click', () => {
     playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
     playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
   }
+
 
   // Initialize the game with Player 1's turn
   loadPlayerHandInBackground(player1Hand, cardImages);

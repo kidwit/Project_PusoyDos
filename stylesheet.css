@@ -198,3 +198,17 @@ h2 {
 }
 
 
+#winnerContainer {
+    display: none; /* Hide the container initially */
+    position: fixed;
+    top: 50%;
+    left: 5%; /* Adjust the left position */
+    transform: translate(-50%, -50%);
+    z-index: 9999; /* Ensure it appears above other elements */
+    width: 5%; /* Adjust the width as desired */
+    max-width: 50px; /* Set a maximum width to prevent it from becoming too large */
+    padding: 2px; /* Add some padding for better visibility */
+    background-color: white; /* Set a background color */
+    border: 1px solid black; /* Add a border for better visibility */
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a box shadow for depth */
+}

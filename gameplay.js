@@ -113,7 +113,6 @@ playButton.addEventListener('click', () => {
     return;
   }
 
-
   // If cards are selected, handle playing cards
   selectedCardsIndexes.forEach(index => {
     const selectedCard = currentPlayer === 1 ? player1Hand[index] : player2Hand[index];
@@ -131,27 +130,49 @@ playButton.addEventListener('click', () => {
     }
   });
 
-
   // Clear the selected cards array
   selectedCardsIndexes = [];
 
+  // Check if the current player has won
+  if (checkWinningCondition()) {
+    // Display winning message or perform other actions
+    console.log(`Player ${currentPlayer} wins!`);
+    // Create the winning image element
+    const winnerImage = document.createElement('img');
+    winnerImage.src = currentPlayer === 1 ? 'images/winners/playerOne.png' : 'images/winners/playerTwo.png';
+    // Get the winner container
+    const winnerContainer = document.getElementById('winnerContainer');
+    // Append the winning image to the specified container
+    winnerContainer.appendChild(winnerImage);
+    // Show the winner container
+    winnerContainer.style.display = 'flex';
+    // You can reset the game or perform other actions here
+  }
 
   // Toggle to the next player's turn
   togglePlayer();
 });
-  // Toggle between players
-  function togglePlayer() {
-    currentPlayer = currentPlayer === 1 ? 2 : 1;
-    loadPlayerHandInBackground(currentPlayer === 1 ? player1Hand : player2Hand, cardImages);
-    const playerTag = document.getElementById('playertag');
-    playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
-    playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
-  }
 
-
-  // Initialize the game with Player 1's turn
-  loadPlayerHandInBackground(player1Hand, cardImages);
+// Function to toggle between players
+function togglePlayer() {
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
+  loadPlayerHandInBackground(currentPlayer === 1 ? player1Hand : player2Hand, cardImages);
   const playerTag = document.getElementById('playertag');
-  playerTag.textContent = 'Player One';
-  playerTag.style.color = 'gold';
+  playerTag.textContent = currentPlayer === 1 ? 'Player One' : 'Player Two';
+  playerTag.style.color = currentPlayer === 1 ? 'gold' : '#BC1823';
+}
+
+// Function to load player hand in background
+function loadPlayerHandInBackground(hand, cardImages) {
+  cardImages.forEach((img, index) => {
+    img.src = backOfCardPath;
+    img.alt = 'Card';
+  });
+}
+
+// Function to check if all cards in the current player's hand have been played
+function checkWinningCondition() {
+  const currentPlayerHand = currentPlayer === 1 ? player1Hand : player2Hand;
+  return currentPlayerHand.every(card => card.played);
+}
 });

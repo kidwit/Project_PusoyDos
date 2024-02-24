@@ -7,6 +7,7 @@ let shuffledCards = [];
 let player1Hand = [];
 let player2Hand = [];
 let currentPlayer = 1;
+let selectedCards = [];
 
 
 // Function to initialize the deck of cards
@@ -101,6 +102,18 @@ cardImages.forEach((img, index) => {
         selectedCardsIndexes.push(index);
         img.style.transform = 'translateY(-10px)';
       }
+      
+      // Debugging: Log selected cards
+      selectedCards = selectedCardsIndexes.map(index => currentPlayer === 1 ? player1Hand[index] : player2Hand[index]);
+      console.log('Selected Cards:', selectedCards);
+    } else if (selectedCardsIndexes.includes(index)) {
+      // If the card is already selected, deselect it
+      selectedCardsIndexes = selectedCardsIndexes.filter(i => i !== index);
+      img.style.transform = 'translateY(0)';
+      
+      // Debugging: Log selected cards after deselection
+      selectedCards = selectedCardsIndexes.map(index => currentPlayer === 1 ? player1Hand[index] : player2Hand[index]);
+      console.log('Selected Cards:', selectedCards);
     }
   });
 });
@@ -108,31 +121,37 @@ cardImages.forEach((img, index) => {
 playButton.addEventListener('click', () => {
   cardplayed.innerHTML = '';
   // Check if any cards are selected
-  if (selectedCardsIndexes.length === 0) {
+  if (selectedCards.length === 0) {
     // Toggle to the next player's turn
     togglePlayer();
     return;
   }
 
-  // If cards are selected, handle playing cards
-  selectedCardsIndexes.forEach(index => {
-    const selectedCard = currentPlayer === 1 ? player1Hand[index] : player2Hand[index];
-    if (selectedCard) {
-      const clonedCard = selectedCard.cloneNode(true);
-      clonedCard.classList.remove('selected');
-      clonedCard.style.marginRight = '5px';
-      cardplayed.appendChild(clonedCard);
-      // Remove the played card from the player's hand
-      if (currentPlayer === 1) {
-        player1Hand.splice(index, 1);
-      } else {
-        player2Hand.splice(index, 1);
+
+   // If cards are selected, handle playing cards
+  selectedCards.forEach(selectedCard => {
+    const clonedCard = selectedCard.cloneNode(true);
+    clonedCard.classList.remove('selected');
+    clonedCard.style.marginRight = '5px';
+    cardplayed.appendChild(clonedCard);
+    
+    // Remove the played card from the player's hand
+    if (currentPlayer === 1) {
+      const indexToRemove = player1Hand.indexOf(selectedCard);
+      if (indexToRemove !== -1) {
+        player1Hand.splice(indexToRemove, 1);
+      }
+    } else {
+      const indexToRemove = player2Hand.indexOf(selectedCard);
+      if (indexToRemove !== -1) {
+        player2Hand.splice(indexToRemove, 1);
       }
     }
   });
 
+
   // Clear the selected cards array
-  selectedCardsIndexes = [];
+  selectedCards = [];
 
   // Check if the current player has won
   if (checkWinningCondition()) {

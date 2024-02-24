@@ -177,12 +177,10 @@ h2 {
 
 
 .card.played {
-    border: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(0, -100%);
-    transition: transform 0.5s ease;
+    position: absolute; /* Set cards to absolute position */
+    left: 0; /* Align cards to the left */
+    z-index: 1; /* Ensure cards are above the previous ones */
+    transition: transform 0.5s ease; /* Add transition effect */
 }
 
 
@@ -192,6 +190,15 @@ h2 {
     box-sizing: border-box;
 }
 
+.card.played:first-child {
+    top: 0; /* Position the first hand at the top */
+    left: 0; /* Align the first hand to the left */
+}
+.card.played + .card.played {
+    top: 0; /* Stack subsequent hands on top of each other */
+    left: 0; /* Align subsequent hands to the left */
+    z-index: 1; /* Ensure subsequent hands are above the previous ones */
+}
 
 .card:hover {
     cursor: pointer;
@@ -202,13 +209,13 @@ h2 {
     display: none; /* Hide the container initially */
     position: fixed;
     top: 50%;
-    left: 5%; /* Adjust the left position */
+    left: 50%; /* Adjust the left position */
     transform: translate(-50%, -50%);
     z-index: 9999; /* Ensure it appears above other elements */
-    width: 5%; /* Adjust the width as desired */
-    max-width: 50px; /* Set a maximum width to prevent it from becoming too large */
-    padding: 2px; /* Add some padding for better visibility */
+    width: 200px; /* Adjust the width as desired */
+    height: 200px; /* Adjust the height as desired */
+    padding: 5px; /* Add some padding for better visibility */
     background-color: white; /* Set a background color */
     border: 1px solid black; /* Add a border for better visibility */
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); /* Add a box shadow for depth */
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.3); /* Add a box shadow for depth */
 }

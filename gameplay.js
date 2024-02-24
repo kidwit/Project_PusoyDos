@@ -106,6 +106,7 @@ cardImages.forEach((img, index) => {
 });
  // Event listener for playing cards
 playButton.addEventListener('click', () => {
+  cardplayed.innerHTML = '';
   // Check if any cards are selected
   if (selectedCardsIndexes.length === 0) {
     // Toggle to the next player's turn
@@ -146,7 +147,7 @@ playButton.addEventListener('click', () => {
     winnerContainer.appendChild(winnerImage);
     // Show the winner container
     winnerContainer.style.display = 'flex';
-    // You can reset the game or perform other actions here
+  
   }
 
   // Toggle to the next player's turn
